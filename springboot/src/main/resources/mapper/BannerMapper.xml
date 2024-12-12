@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.BannerDao">
+
+    <select id="findBySearch" resultType="com.example.entity.Banner">
+        select `banner`.*, `goods`.`name` as goodName from `banner`
+		left join `goods` on `banner`.`goodsId` = `goods`.id
+
+        where 1 = 1
+		<if test="search != null and search.goodName != null and search.goodName != ''">
+			and `goods`.`name` like concat ('%', #{search.goodName}, '%')
+		</if>
+
+    </select>
+
+</mapper>

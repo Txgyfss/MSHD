@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.OrderDao">
+
+    <select id="findBySearch" resultType="com.example.entity.Order">
+        select `orderInfo`.*, `user`.username as userName from `orderInfo`
+            left join user on orderInfo.userId = user.id
+            inner join goods on orderInfo.goodsId = goods.id
+
+        where 1 = 1
+        <if test="search != null and search.orderId != null and search.orderId != ''">
+            and `orderInfo`.`orderId` = #{search.orderId}
+        </if>
+    </select>
+
+</mapper>

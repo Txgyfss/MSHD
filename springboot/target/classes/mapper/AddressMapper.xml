@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.AddressDao">
+
+    <select id="findBySearch" resultType="com.example.entity.Address">
+        select `address`.*, `user`.`username` as user from `address`
+        left join `user` on `address`.`userId` = `user`.id
+        <where>
+            <if test="search != null and search.address != null and search.address != ''">
+                and `address`.`address` like concat ('%', #{search.address}, '%')
+            </if>
+            <if test="userId != null">
+                and `address`.`userId` = #{userId}
+            </if>
+            <if test="role != null">
+                and `address`.`role` = #{role}
+            </if>
+        </where>
+    </select>
+
+</mapper>
