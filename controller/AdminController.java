@@ -1,29 +1,30 @@
 package com.example.controller;
 
 import com.example.common.Result;
-import com.example.entity.Cart;
-import com.example.service.CartService;
+import com.example.entity.*;
+import com.example.service.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 /**
-*  描述：购物车相关接口
+*  描述：管理员相关接口
 */
 @RestController
-@RequestMapping(value = "/cart")
-public class CartController {
+@RequestMapping(value = "/admin")
+public class AdminController {
 
     @Resource
-    private CartService cartService;
+    private AdminService adminService;
 
     /**
      * 描述：新增
      */
     @PostMapping
-    public Result add(@RequestBody Cart cart) {
-        cartService.add(cart);
-        return Result.success(cart);
+    public Result add(@RequestBody Admin admin) {
+
+        adminService.add(admin);
+        return Result.success(admin);
     }
 
     /**
@@ -31,7 +32,7 @@ public class CartController {
      */
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
-        cartService.delete(id);
+        adminService.delete(id);
         return Result.success();
     }
 
@@ -39,9 +40,9 @@ public class CartController {
      * 描述：更新
      */
     @PutMapping
-    public Result update(@RequestBody Cart cart) {
+    public Result update(@RequestBody Admin admin) {
 
-        cartService.update(cart);
+        adminService.update(admin);
         return Result.success();
     }
 
@@ -50,8 +51,8 @@ public class CartController {
      */
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
-        Cart cart = cartService.findById(id);
-        return Result.success(cart);
+        Admin admin = adminService.findById(id);
+        return Result.success(admin);
     }
 
     /**
@@ -59,17 +60,17 @@ public class CartController {
      */
     @GetMapping
     public Result all() {
-        return Result.success(cartService.findAll());
+        return Result.success(adminService.findAll());
     }
 
     /**
      * 描述：分页查询
      */
     @PostMapping("/page")
-    public Result page(@RequestBody Cart search,
+    public Result page(@RequestBody Admin search,
                        @RequestParam(defaultValue = "1") Integer pageNum,
                        @RequestParam(defaultValue = "5") Integer pageSize) {
-        return Result.success(cartService.findPage(search, pageNum, pageSize));
+        return Result.success(adminService.findPage(search, pageNum, pageSize));
     }
 
 

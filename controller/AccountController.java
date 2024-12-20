@@ -1,17 +1,19 @@
 package com.example.controller;
 
-import com.example.common.config.JwtTokenUtils;
 import com.example.common.Result;
 import com.example.common.ResultCode;
-import com.example.entity.*;
-import com.example.service.*;
+import com.example.common.config.JwtTokenUtils;
+import com.example.entity.Account;
+import com.example.entity.Admin;
+import com.example.entity.User;
+import com.example.service.AdminService;
+import com.example.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  描述：系统用户操作相关接口

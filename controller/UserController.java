@@ -8,23 +8,23 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
-*  描述：商品分类相关接口
+*  描述：用户相关接口
 */
 @RestController
-@RequestMapping(value = "/type")
-public class TypeController {
+@RequestMapping(value = "/user")
+public class UserController {
 
     @Resource
-    private TypeService typeService;
+    private UserService userService;
 
     /**
      * 描述：新增
      */
     @PostMapping
-    public Result add(@RequestBody Type type) {
+    public Result add(@RequestBody User user) {
 
-        typeService.add(type);
-        return Result.success(type);
+        userService.add(user);
+        return Result.success(user);
     }
 
     /**
@@ -32,7 +32,7 @@ public class TypeController {
      */
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
-        typeService.delete(id);
+        userService.delete(id);
         return Result.success();
     }
 
@@ -40,9 +40,9 @@ public class TypeController {
      * 描述：更新
      */
     @PutMapping
-    public Result update(@RequestBody Type type) {
+    public Result update(@RequestBody User user) {
 
-        typeService.update(type);
+        userService.update(user);
         return Result.success();
     }
 
@@ -51,8 +51,8 @@ public class TypeController {
      */
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
-        Type type = typeService.findById(id);
-        return Result.success(type);
+        User user = userService.findById(id);
+        return Result.success(user);
     }
 
     /**
@@ -60,17 +60,17 @@ public class TypeController {
      */
     @GetMapping
     public Result all() {
-        return Result.success(typeService.findAll());
+        return Result.success(userService.findAll());
     }
 
     /**
      * 描述：分页查询
      */
     @PostMapping("/page")
-    public Result page(@RequestBody Type search,
+    public Result page(@RequestBody User search,
                        @RequestParam(defaultValue = "1") Integer pageNum,
                        @RequestParam(defaultValue = "5") Integer pageSize) {
-        return Result.success(typeService.findPage(search, pageNum, pageSize));
+        return Result.success(userService.findPage(search, pageNum, pageSize));
     }
 
 
