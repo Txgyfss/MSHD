@@ -2,41 +2,42 @@ package com.example;
 
 public class ApiResponse<T> {
 
-    private String code;
-    private String msg;
-    private T data;
+    private int code;           // 状态码
+    private String message;     // 消息
+    private T data;             // 数据
 
-    private ApiResponse(String code, String msg, T data) {
+    // 构造函数
+    public ApiResponse(int code, String message, T data) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
         this.data = data;
     }
 
-    // 成功响应
+    // 静态方法，表示请求成功
     public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>("0", "成功", data);
+        return new ApiResponse<>(200, "成功", data);
     }
 
-    // 失败响应
-    public static <T> ApiResponse<T> error(String msg) {
-        return new ApiResponse<>("1", msg, null);
+    // 静态方法，表示请求失败
+    public static <T> ApiResponse<T> failure(int code, String message) {
+        return new ApiResponse<>(code, message, null);
     }
 
-    // Getters 和 Setters
-    public String getCode() {
+    // Getter 和 Setter 方法
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {

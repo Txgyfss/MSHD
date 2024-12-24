@@ -1,26 +1,16 @@
 package com.example.entity;
 
-import java.util.Date;
-
 public class Disaster {
-    private String disasterCode;
     private String location;
-    private Date time;
+    private String time;
     private String source;
     private String carrier;
     private String disasterType;
     private String indicator;
     private String description;
+    private String disasterCode;
 
-    // Getters and setters
-    public String getDisasterCode() {
-        return disasterCode;
-    }
-
-    public void setDisasterCode(String disasterCode) {
-        this.disasterCode = disasterCode;
-    }
-
+    // Getters and Setters
     public String getLocation() {
         return location;
     }
@@ -29,11 +19,11 @@ public class Disaster {
         this.location = location;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -75,5 +65,13 @@ public class Disaster {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDisasterCode() {
+        return disasterCode;
+    }
+
+    public void setDisasterCode(String disasterCode) {
+        this.disasterCode = disasterCode;
     }
 }
