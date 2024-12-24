@@ -19,7 +19,7 @@ const routes = [
 			{ path: 'order', component: () => import("@/views/manager/Order")  },
 			{ path: 'comment', component: () => import("@/views/manager/Comment")  },
 			{ path: 'notice', component: () => import("@/views/manager/Notice")  },
-			{ path: 'address', component: () => import("@/views/manager/Address")  },
+			//{ path: 'address', component: () => import("@/views/manager/Address")  },
 			{ path: 'advertising', component: () => import("@/views/manager/Advertising.vue")  },
 			{ path: 'banner', component: () => import("@/views/manager/Banner.vue")  },
 
