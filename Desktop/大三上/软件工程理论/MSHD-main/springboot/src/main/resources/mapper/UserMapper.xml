@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.UserDao">
+
+    <select id="findBySearch" resultType="com.example.entity.User">
+        select `user`.* from `user`
+
+        where 1 = 1
+		<if test="search != null and search.username != null and search.username != ''">
+			and `user`.`username` like concat ('%', #{search.username}, '%')
+		</if>
+
+    </select>
+
+</mapper>
