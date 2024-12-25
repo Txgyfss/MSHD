@@ -10,11 +10,19 @@
           <!-- 地理位置 -->
           <el-col :span="12">
             <el-form-item label="灾情地理位置">
-              <el-select size="small" v-model="form.location" placeholder="请选择灾情发生地区">
-                <el-option v-for="(location, index) in locations" :key="index" :label="location" :value="location"></el-option>
-              </el-select>
+              <el-cascader
+                  size="small"
+                  v-model="form.location"
+                  :options="locationOptions"
+                  :props="cascaderProps"
+                  placeholder="请选择完整的地理位置"
+                  @change="handleCascaderChange"
+                  change-on-select
+              ></el-cascader>
             </el-form-item>
           </el-col>
+
+
 
           <!-- 时间 -->
           <el-col :span="12">
@@ -116,7 +124,6 @@
           </el-upload>
         </el-form-item>
 
-        <!-- 增加margin-top来拉开“解码灾情码”按钮与上传文件之间的间距 -->
         <el-form-item style="margin-top: 15px;">
           <el-button size="small" type="primary" @click="decodeDisasterCode">解码灾情码</el-button>
         </el-form-item>
@@ -185,7 +192,7 @@ export default {
   data() {
     return {
       form: {
-        location: '',
+        location: [],
         time: '',
         source: '',
         carrier: '',
@@ -204,26 +211,130 @@ export default {
         indicator: '',
         description: ''
       },
-      locations: [],
+      locationOptions: [],  // 存储级联下拉框数据
+
+      // 完整的地理位置数据
       sources: [],
       carriers: [],
       disasterTypes: [],
       indicators: [],
+      cascaderProps: {
+        value: 'code',  // 绑定选择项的字段
+        label: 'name',  // 显示的标签字段
+        children: 'children',  // 子项的字段名
+      }
     };
   },
   methods: {
+    // 获取省份数据
+    async fetchProvinces() {
+      try {
+        const response = await request.get('http://localhost:8080/api/areas/getProvinces');
+        return response.data.map(province => ({
+          code: province.code,
+          name: province.name,
+          children: []  // 初始化为空，后续会填充城市数据
+        }));
+      } catch (error) {
+        console.error('Error fetching provinces:', error);
+      }
+    },
+
+    // 获取城市数据
+    async fetchCities(provinceCode) {
+      try {
+        const response = await request.get(`http://localhost:8080/api/areas/getCities?provinceCode=${provinceCode}`);
+        return response.data.map(city => ({
+          code: city.code,
+          name: city.name,
+          children: []  // 初始化为空，后续会填充县区数据
+        }));
+      } catch (error) {
+        console.error('Error fetching cities:', error);
+      }
+    },
+
+    // 获取县区数据
+    async fetchCounties(cityCode) {
+      try {
+        const response = await request.get(`http://localhost:8080/api/areas/getCounties?cityCode=${cityCode}`);
+        return response.data.map(county => ({
+          code: county.code,
+          name: county.name,
+          children: []  // 初始化为空，后续会填充乡镇数据
+        }));
+      } catch (error) {
+        console.error('Error fetching counties:', error);
+      }
+    },
+
+    // 获取乡镇数据
+    async fetchTowns(areaCode) {
+      try {
+        const response = await request.get(`http://localhost:8080/api/areas/getTowns?areaCode=${areaCode}`);
+        return response.data.map(town => ({
+          code: town.code,
+          name: town.name,
+          children: []  // 初始化为空，后续会填充村庄数据
+        }));
+      } catch (error) {
+        console.error('Error fetching towns:', error);
+      }
+    },
+
+    // 获取村庄数据
+    async fetchVillages(streetCode) {
+      try {
+        const response = await request.get(`http://localhost:8080/api/areas/getVillages?streetCode=${streetCode}`);
+        return response.data.map(village => ({
+          code: village.code,
+          name: village.name
+        }));
+      } catch (error) {
+        console.error('Error fetching villages:', error);
+      }
+    },
+
+    // 级联选择变化时的处理
+    async handleCascaderChange(value, selectedData) {
+      const [provinceCode, cityCode, countyCode, townCode, villageCode] = value;
+
+      if (provinceCode) {
+        const cities = await this.fetchCities(provinceCode);
+        this.updateChildren(selectedData, cities);
+      }
+      if (cityCode) {
+        const counties = await this.fetchCounties(cityCode);
+        this.updateChildren(selectedData, counties);
+      }
+      if (countyCode) {
+        const towns = await this.fetchTowns(countyCode);
+        this.updateChildren(selectedData, towns);
+      }
+      if (townCode) {
+        const villages = await this.fetchVillages(townCode);
+        this.updateChildren(selectedData, villages);
+      }
+    },
+
+    // 更新级联选项的子节点
+    updateChildren(selectedData, children) {
+      selectedData.forEach(data => {
+        if (data.code === selectedData[selectedData.length - 1].code) {
+          data.children = children;
+        }
+      });
+    },
 
     // 获取后端的地理位置、灾情来源等数据
     async fetchData() {
       try {
-        const locationsResponse = await request.get('http://localhost:8080/disaster/locations');
-        console.log('Locations Response:', locationsResponse);  // 打印响应内容
         const sourcesResponse = await request.get('http://localhost:8080/disaster/sources');
         const carriersResponse = await request.get('http://localhost:8080/disaster/carriers');
         const disasterTypesResponse = await request.get('http://localhost:8080/disaster/types');
         const indicatorsResponse = await request.get('http://localhost:8080/disaster/indicators');
 
-        this.locations = locationsResponse.data;
+        // 设置其他下拉选项数据
         this.sources = sourcesResponse.data;
         this.carriers = carriersResponse.data;
         this.disasterTypes = disasterTypesResponse.data;
@@ -233,30 +344,97 @@ export default {
       }
     },
 
-    // 生成灾情码的函数
+    // 生成灾情码
     generateDisasterCode() {
-      this.disasterCode = this.form.location + this.form.time + this.form.source + this.form.carrier + this.form.disasterType + this.form.indicator;
+      const location = this.form.location.join('/');
+      const time = this.form.time;
+      const source = this.form.source;
+      const carrier = this.form.carrier;
+      const disasterType = this.form.disasterType;
+      const indicator = this.form.indicator;
+      const description = this.form.description;
+
+      this.disasterCode = `${location}|${time}|${source}|${carrier}|${disasterType}|${indicator}|${description}`;
     },
 
     // 解码灾情码
     decodeDisasterCode() {
-      // 假设后端已经提供了一个API来解码灾情码
-      request.get(`/disaster/decode/${this.disasterCodeInput}`)
-          .then((response) => {
-            this.decodedData = response.data;
-          })
-          .catch((error) => {
-            console.error('Error decoding disaster code:', error);
-          });
+      const codeParts = this.disasterCodeInput.split('|');
+      this.decodedData = {
+        location: codeParts[0],
+        time: codeParts[1],
+        source: codeParts[2],
+        carrier: codeParts[3],
+        disasterType: codeParts[4],
+        indicator: codeParts[5],
+        description: codeParts[6]
+      };
     },
 
-    // 文件上传成功
+    // 上传灾情信息
+    async submitDisasterInfo() {
+      const disasterInfo = {
+        location: this.form.location.join('/'),
+        time: this.form.time,
+        source: this.form.source,
+        carrier: this.form.carrier,
+        disasterType: this.form.disasterType,
+        indicator: this.form.indicator,
+        description: this.form.description
+      };
+
+      try {
+        const response = await request.post('http://localhost:8080/add', disasterInfo);
+        console.log('Disaster information uploaded successfully:', response);
+      } catch (error) {
+        console.error('Error uploading disaster information:', error);
+      }
+    },
+
+    // 获取所有灾情信息（解码）
+    async fetchAllDisasterInfo() {
+      try {
+        const response = await request.get(`http://localhost:8080/all?disasterCode=${this.disasterCodeInput}`);
+        this.decodedData = response.data;
+        console.log('Decoded disaster information:', this.decodedData);
+      } catch (error) {
+        console.error('Error fetching all disaster information:', error);
+      }
+    },
+
     fileUploadSuccess(response) {
       console.log('File uploaded successfully:', response);
     },
   },
+
   mounted() {
-    this.fetchData();
+    // 获取初始的省份数据
+    this.fetchProvinces()
+        .then(provinces => {
+          this.locationOptions = provinces;
+        })
+        .catch(error => {
+          console.error("Error fetching provinces:", error);
+        });
+
+    this.fetchData().catch(error => {
+      console.error("Error fetching other data:", error);
+    });
   }
-};
+}
 </script>
+
+
+<style scoped>
+.form-card {
+  margin-top: 20px;
+}
+.form-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.disaster-code-display {
+  margin-top: 20px;
+}
+</style>
