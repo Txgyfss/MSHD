@@ -1,0 +1,348 @@
+:root {
+    --primary: #1673ff;
+    --secondary: #1f57af;
+    --success: #ff9100;
+    --info: #ffd000;
+    --warning: #ff4400;
+    --danger: #ff9100;
+    --tableHeaderBg: #2aa5fd;
+    --tableHeaderColor: #ffffff
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /*font-family: "Microsoft YaHei UI";*/
+}
+[v-cloak] {
+    display: none;
+}
+/* 过渡样式 */
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* 2.1.8+ 版本中使用fade-leave-to */ {
+    opacity: 0;
+}
+/*背景*/
+body {
+    background-image: url('../imgs/640.png'); /* 替换为你的图片路径 */
+    background-size: cover; /* 覆盖整个背景，不留空白 */
+    background-position: right 88px; /* 将图片置于背景的中心 */
+    background-repeat: no-repeat; /* 不重复图片 */
+    background-attachment: fixed; /* 滚动时背景图片固定不动 */
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%); /* 初始状态，元素位于视口顶部之上 */
+        opacity: 0; /* 初始状态，元素完全透明 */
+        visibility: hidden;
+    }
+    to {
+        transform: translateY(0); /* 动画结束时，元素移至其正常位置 */
+        opacity: 1; /* 动画结束时，元素完全不透明 */
+        visibility: visible;
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%); /* 初始状态，元素位于容器左侧之外 */
+        opacity: 0; /* 初始状态，元素完全透明 */
+    }
+    to {
+        transform: translateX(0); /* 动画结束时，元素移至其正常位置 */
+        opacity: 1; /* 动画结束时，元素完全不透明 */
+
+    }
+}
+
+@keyframes colorFadeIn {
+    from {
+        color: #ffffff; /* 动画开始时的颜色为白色 */
+        opacity: 0; /* 动画开始时完全透明 */
+    }
+    to {
+        color: #1f57af; /* 动画结束时的颜色为深蓝色 */
+        opacity: 1; /* 动画结束时完全不透明 */
+    }
+}
+
+.manager-header {
+    height: 88px;
+    line-height: 88px;
+    background:
+            linear-gradient(to right, #1673ff, rgba(28, 177, 255, 0.56)); /* 纵向渐变 */
+    display: flex;
+    /*box-shadow: 10px 10px 10px #f3f0f0;*/
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    animation: slideDown 0.5s ease-out forwards;
+}
+.manager-header-content {
+    height: 60px;
+    line-height: 60px;
+    padding-left: 10px;
+    display: flex;
+}
+/*主标题*/
+.manager-header-left {
+    width: 400px;
+    color: #f8f7f7;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: "YouYuan";
+    display: flex;
+    text-align: left;
+    align-items: center;
+}
+.title {
+    flex: 1;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 22px;
+    font-weight: 900;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.manager-header-left img {
+    width: 60px;
+    height: 60px;
+    margin-left: 15px;
+
+}
+.manager-header-center {
+    flex: 1;
+    color: #f8f7f7;
+    padding-right: 10px;
+    text-align: right;
+    font-weight: bold;
+}
+.manager-header-right {
+    display: flex;
+    width: 80px;
+    text-align: center;
+    align-items: center;
+
+
+}
+.avatar-box {
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+/*头像*/
+.manager-header-right img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+/*小三角*/
+.el-submenu__icon-arrow {
+    margin-top: -5px;
+    color: #fff !important;
+}
+.el-submenu__title {
+    height: 40px;
+    line-height: 40px;
+    color: rgba(255, 255, 255);
+    font-size: 16px;
+    font-family: "YouYuan";
+    font-weight: bolder;
+    background: linear-gradient(to right, #1a76ff, rgba(54, 142, 254, 0.31));
+    border-left-color: #C8C7C5;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    opacity: 0; /* 初始状态，元素完全透明 */
+    visibility: hidden; /* 初始状态，元素不可见 */
+    animation: slideDown 0.5s ease-out 0.2s forwards;
+}
+.el-menu {
+    background: linear-gradient(to right, #1a76ff, rgba(54, 142, 254, 0.31));
+}
+.el-menu-item {
+    height: 40px !important;
+    line-height: 40px !important;
+    color: rgb(255, 255, 255);
+    padding-left: 52px !important;
+    font-size: 14px;
+    background: linear-gradient(to right, rgba(42, 165, 253, 0.73), rgb(56, 143, 254));
+    border-bottom-color: #C8C7C5;
+    border-bottom: 1px solid rgba(42, 165, 253, 0.19);
+    opacity: 0; /* 初始状态，元素完全透明 */
+    animation: slideInFromLeft 0.5s ease-out 0.3s forwards;
+}
+
+.el-menu-item:nth-child(1) { animation-delay: 0s; }
+.el-menu-item:nth-child(2) { animation-delay: 0.2s; }
+.el-menu-item:nth-child(3) { animation-delay: 0.38s; }
+.el-menu-item:nth-child(4) { animation-delay: 0.56s; }
+.el-menu-item:nth-child(5) { animation-delay: 0.74s; }
+.el-menu-item:nth-child(6) { animation-delay: 0.92s; }
+.el-menu-item:nth-child(7) { animation-delay: 1.1s; }
+.el-menu-item:nth-child(8) { animation-delay: 1.28s; }
+
+.el-menu-item:hover, .el-submenu__title:hover {
+    background: linear-gradient(to right, rgb(255, 145, 0), #ffc916);
+    color: #1673ff;
+    font-weight:bold;
+    border-radius: 90px;
+    overflow: hidden; /* 隐藏超出元素的部分 */
+}
+.el-submenu__title:hover {
+    border-left: 5px solid #ffd000;
+    transition: border-left .2s;
+}
+.el-menu-item.is-active {
+    color: #d6e5ff;
+    font-size: 15px;
+    font-weight: bolder;
+    background: linear-gradient(to right, rgba(37, 107, 210, 0.66), rgba(43, 97, 192, 0.83));
+    padding-left: 52px !important;
+}
+.main-nav {
+    width: 200px;
+    height: 500%;
+}
+.main-nav-menu {
+    /*background: linear-gradient(to left, rgb(255, 255, 255), rgba(255, 255, 255, 0.64));*/
+    background: rgba(31, 123, 255, 0.64);
+    min-height: calc(100vh - 60px);
+    border: none;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    height: 100%;
+}
+.main-body {
+    flex: 1;
+    padding:20px;
+    width: 0;
+}
+.main-body-index {
+    flex: 1;
+    padding:20px;
+    width: 0;
+}
+.main-body-header {
+    padding-bottom: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    width: 700px;
+    color: #ffffff; /* 初始颜色设置为白色 */
+    opacity: 0; /* 初始状态，元素完全透明 */
+    animation: colorFadeIn 0.8s ease-out forwards;
+}
+.main-body-content {
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 20px 0;
+    padding:10px;
+}
+.main-body-search {
+    display:flex;
+    text-align: left;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.main-table-box {
+    margin-top: 10px;
+    width: calc(100vw - 280px);
+}
+.el-table th.el-table__cell.is-leaf {
+    border-bottom: 1px solid #dee2e6;
+}
+.main-input {
+    width: 300px;
+    border-radius: 25%;
+    margin-left: 500px;
+    margin-right: 5px !important;
+}
+.el-input__inner {
+    border: 1px solid #ced4da !important;
+    border-radius: 2px !important;
+}
+.el-textarea__inner {
+    border: 1px solid #ced4da !important;
+}
+.el-button {
+    border-radius: 2px !important;
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+.el-button:hover {
+    font-weight: bold;
+    transform: scale(1.1); /* 悬停时放大到原来的1.1倍 */
+}
+.el-button--primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+.el-button--danger {
+    background-color: var(--danger) !important;
+    border-color: var(--danger) !important;
+}
+.el-button--success {
+    background-color: var(--success) !important;
+    border-color: var(--success) !important;
+}
+.el-button--info {
+    background-color: var(--info) !important;
+    border-color: var(--info) !important;
+}
+.el-button--warning {
+    background-color: var(--warning) !important;
+    border-color: var(--warning) !important;
+}
+.el-pager li:not(.disabled).active {
+    background-color: var(--primary) !important;
+}
+.el-form-item {
+    margin-bottom: 5px !important;
+}
+.el-table .cell {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.el-table__row .el-button {
+    margin: 0 2px !important;
+}
+.el-notification__content {
+    margin: 0;
+}
+.el-notification__group {
+    display: flex;
+    align-items: center;
+}
+.tableHeaderClass{
+    background-color: var(--tableHeaderBg) !important;
+    color: var(--tableHeaderColor);
+    font-weight: bolder;
+    font-size: 14px;
+    height: 60px;
+    opacity: 0; /* 初始状态，元素完全透明 */
+    visibility: hidden; /* 初始状态，元素不可见 */
+    animation: slideDown 0.25s ease-out 0.3s forwards;
+}
+.cell {
+    font-size: 14px !important;
+}
+table {
+    border: 1px solid #EBEEF5;
+    border-collapse: collapse !important;
+    opacity: 0; /* 初始状态，元素完全透明 */
+    visibility: hidden; /* 初始状态，元素不可见 */
+    animation: slideDown 0.25s ease-out 0.5s forwards;
+}
+td {
+    border: 1px solid #EBEEF5 !important;
+}
+.el-dropdown-menu__item:hover {
+    color: var(--primary) !important;
+    background-color: #f3faf3 !important;
+}
+.el-pager .number:not(.active):hover {
+    color: var(--primary) !important;
+}

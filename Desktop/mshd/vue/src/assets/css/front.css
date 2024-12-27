@@ -1,0 +1,378 @@
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%); /* 初始位置在视口上方 */
+        opacity: 0; /* 初始透明度为0 */
+    }
+    to {
+        transform: translateY(0); /* 移动到正常位置 */
+        opacity: 1; /* 透明度变为1 */
+    }
+}
+
+.header {
+    display: flex;
+    height: 88px;
+    line-height: 88px;
+    border-bottom: 1px solid #eee;
+    background: linear-gradient(to right, #1673ff, rgba(28, 177, 255, 0.56));
+    animation-name: slideDown; /* 引用关键帧动画 */
+    animation-duration: 0.5s; /* 动画持续时间 */
+    animation-fill-mode: both; /* 动画前后的状态 */
+    animation-delay: 0s; /* 动画开始前的延迟时间 */
+    opacity: 0; /* 初始透明度 */
+    transform: translateY(-100%); /* 初始位置 */
+}
+.header-left {
+    width: 350px;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+}
+.header-left img {
+    width: 60px;
+    height: 60px;
+}
+.header-dropdown img{
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+}
+.header-left .title {
+    flex: 1;
+    color: #ffffff;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'YouYuan';
+}
+.header-center {
+    flex: 1;
+}
+.el-menu{
+    background: transparent;
+}
+.el-menu--horizontal {
+    height: 88px; /* 你可以根据需要调整这个值 */
+    line-height: 88px; /* 确保行高和高度一致，使文字垂直居中 */
+}
+.el-menu-item{
+    background: transparent;
+    font-size: 18px;
+    font-family: "Microsoft YaHei";
+    font-weight:bold;
+    padding: 0 28px;
+}
+.el-menu-item:hover {
+    background: linear-gradient(to right, rgb(255, 145, 0), #ffc916);
+    border-radius: 20px;
+    overflow: hidden; /* 隐藏超出元素的部分 */
+}
+.el-menu-item.is-active {
+    color: #d6e5ff;
+    font-size: 18px;
+    font-weight: bolder;
+    border-radius: 20px;
+    background: linear-gradient(to right, rgb(31, 87, 175), rgb(22, 115, 255));
+}
+.el-menu--horizontal > .el-menu-item {
+    height: 88px;
+    line-height: 88px;
+}
+.header-right {
+    width: 200px;
+    padding-right: 20px;
+    text-align: right;
+}
+.header-dropdown {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.el-dropdown-menu {
+    width: 100px !important;
+    text-align: center !important;
+}
+/* 页面相关 */
+.el-carousel__item img {
+    width: 100%;
+}
+.main-content {
+    width: 100%;
+    background-image: url('../imgs/login_bg.jpg'); /* 替换为你的图片路径 */
+    background-size: cover; /* 覆盖整个背景，不留空白 */
+    background-position: right; /* 将图片置于背景的中心 */
+    background-repeat: no-repeat; /* 不重复图片 */
+    background-attachment: fixed; /* 滚动时背景图片固定不动 */
+}
+.main-line {
+    display: flex;
+    margin-bottom: 10px;
+}
+.main-line-1 {
+    flex: 1;
+}
+.main-line-2 {
+    flex: 2;
+}
+.main-line-3 {
+    flex: 3;
+}
+/* 静态纯文字 */
+.main-text {
+    background-color: #ffffff;
+    padding: 0 20px;
+    color: #333;
+    line-height: 30px;
+    font-size: 16px;
+    text-align: justify;
+    text-indent: 2rem;
+    overflow-y: scroll;
+    height: 40vh;
+}
+.main-text::-webkit-scrollbar {
+    width: 0;
+}
+/* 静态图片视频 */
+.main-img, .main-video {
+    background-color: #ffffff;
+    padding: 0 2px;
+}
+.main-img img, .main-video video {
+    height: 80vh;
+    width: 100%;
+    display: block;
+}
+
+/*----------------------------*/
+.main-img-text-line {
+    background-color: #ffffff;
+    padding: 0 5px;
+}
+.main-img-text-line img {
+    height: 100%;
+}
+.img-text-line {
+    margin-bottom: 2.5vh;
+    display: flex;
+}
+.img-text-line img {
+    height: 6vh;
+    width: 6vh;
+    margin-left: 1px;
+    border-radius: 10%
+}
+.img-text-line-right {
+    margin-left: 10px;
+    flex: 1;
+    height:6vh;
+    line-height: 3vh;
+    width: 0
+}
+.img-text-line-title {
+    font-size: 17px;
+    font-weight: bold;
+    width: 100%;
+}
+.img-text-line-subtitle {
+    margin-top: 5px;
+}
+/*-----------------------*/
+.main-img-text-grid {
+    background-color: #ffffff;
+    padding: 0 5px;
+}
+.img-text-grid {
+    height: 40vh;
+    padding-top: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.img-text-grid-item {
+    flex: 1;
+    width: 0;
+    text-align: center;
+}
+.img-text-grid-item img {
+    width: 35vh;
+    height: 35vh;
+    border-radius: 10px
+}
+.img-text-bottom-title {
+    font-size: 16px;
+    font-weight: bold;
+    width: 30vh;
+    height: 4vh;
+    line-height: 4vh;
+    text-align: center;
+    margin: 0.5vh auto;
+}
+/*----------------------*/
+.main-text-line {
+    background-color: #ffffff;
+    padding: 0 5px;
+}
+.text-line-item {
+    font-size: 16px;
+    height:4vh;
+    line-height: 4vh;
+    font-weight: bold;
+}
+
+.item-grid {
+    width: 1600px;
+    padding-top: 1vh;
+    align-items: center;
+    justify-content: center;
+    line-height: 300%;
+    display: flex;
+    flex-wrap: wrap; /* 允许子元素在需要时换行 */
+    transition: transform 0.3s ease; /* 平滑过渡效果 */
+}
+.item-grid-item-firstrow {
+    display: inline-block;
+    width: 20%;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #1673ff;
+    box-shadow: none; /* 初始状态没有阴影 */
+    transition: transform 0.3s ease, color 0.3s ease; /* 平滑过渡效果 */
+}
+.item-grid-item {
+    display: inline-block;
+    width: 20%;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #1673ff;
+    box-shadow: none; /* 初始状态没有阴影 */
+}
+.item-grid-item-firstrow:hover{
+    transform: scale(1.1); /* 悬停时放大 */
+    color: #0d47a1; /* 悬停时颜色变深 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 悬停时添加阴影 */
+}
+.line{
+    border-right:1px solid #f6f6f6;
+}
+.time {
+    font-size: 18px;
+    font-weight: bold;;
+    color: #f83232;
+}
+
+.bottom {
+    margin-top: 13px;
+    line-height: 20px;
+}
+
+.button {
+    padding: 0;
+    float: right;
+}
+
+.image {
+    width: 100%;
+    display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both
+}
+
+.overflowShow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+/*--详情页面--*/
+.detail-container {
+    width: 70%;
+    background-color: white;
+    min-height: 400px;
+    margin: 20px auto;
+    padding-bottom: 20px;
+}
+.detail-title {
+    padding: 15px 30px;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+}
+.detail-content, .detail-comment {
+    width: 90%;
+    min-height: 400px;
+    margin: 10px auto;
+}
+/*富文本详情页部分*/
+.detail-richtext {
+    margin: 20px 0;
+}
+.detail-richtext-title {
+    height: 40px;
+    line-height: 40px;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: "YouYuan";
+    color: #ff9100;
+    text-align: center;
+}
+.detail-richtext-subtitle{
+    margin-top: 10px;
+    color: #577db6;
+}
+.detail-richtext-content {
+    display: flex;
+    justify-content: center; /* 设置主轴上内容对齐为居中 */
+}
+.w-e-text p {
+    margin: 10px 0 !important;
+}
+/*属性排列部分*/
+.detail-fields {
+    margin: 10px 0;
+}
+.detail-fields-card {
+    width: 80%;
+    margin: 10px auto;
+}
+.detail-fields-item {
+    margin: 10px 0;
+    font-size: 15px;
+}
+/*带左图属性部分*/
+.detail-left-img-fields {
+    display: flex;
+    margin: 10px auto;
+}
+.detail-left-img-fields-left {
+    flex: 1;
+}
+.detail-left-img-fields-right {
+    flex: 1;
+}
+/*评论区部分*/
+.detail-comment {
+    margin-top: 10px;
+}
+.all {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+}
+.allButton {
+    width: 200px;
+    height: 60px;
+    font-size: 16px;
+    color: #959395;
+    border-color: #8f5b95;
+}
